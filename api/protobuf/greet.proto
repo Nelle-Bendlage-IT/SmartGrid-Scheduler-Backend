@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package greet;
+
+option go_package = "github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/greet";
+
+service GreetService {
+    rpc GetGreet (GetGreetRequest) returns (GetGreetResponse);
+}
+
+message GetGreetRequest{
+    string user = 1;
+}
+
+message GetGreetResponse{
+    string message = 1;
+}
