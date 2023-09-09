@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	supa "github.com/nedpals/supabase-go"
+
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/app"
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/genproto/greet"
 )
@@ -17,6 +19,7 @@ func NewGRPCServer(app app.Application) GRPCService {
 }
 
 func (g GRPCService) GetGreet(ctx context.Context, req *greet.GetGreetRequest) (*greet.GetGreetResponse, error) {
-	fmt.Println(req.GetUser())
+	user := ctx.Value("user").(*supa.User)
+	fmt.Println(user)
 	return &greet.GetGreetResponse{Message: fmt.Sprint(g.app.Greet.HandleGetGreet(req.User))}, nil
 }
