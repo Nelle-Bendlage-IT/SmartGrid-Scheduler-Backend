@@ -7,7 +7,8 @@ type Config struct {
 		URL string `config:"URL"`
 		Key string `config:"KEY"`
 	}
-	Port int
+	Port            int
+	CorrentlyAPIKey string `config:"CORRENTLY_API_KEY"`
 }
 
 var appConfig Config
