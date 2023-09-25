@@ -20,3 +20,25 @@ func TestGetGSIPrediction(t *testing.T) {
 
 	assert.NotNil(t, resp)
 }
+
+func TestGetLocalPricePrediction(t *testing.T) {
+	cfg := config.GetConfig()
+	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, logger.GetLogger())
+	resp, err := adapter.GetLocalPricePrediction(context.TODO(), "48155")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.NotNil(t, resp)
+}
+
+func TestGetBestHourPrediction(t *testing.T) {
+	cfg := config.GetConfig()
+	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, logger.GetLogger())
+	resp, err := adapter.GetBestHourForEnergyConsumption(context.TODO(), "48155", "6")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	assert.NotNil(t, resp)
+}

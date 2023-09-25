@@ -37,3 +37,25 @@ type Location struct {
 	City      string `json:"city"`
 	Signature string `json:"signature"`
 }
+
+type LocalMarketpriceResponse struct {
+	Object        string                 `json:"object"`
+	URL           string                 `json:"url"`
+	License       string                 `json:"license"`
+	Documentation string                 `json:"documentation"`
+	Support       string                 `json:"support"`
+	Data          []LocalMarketpriceData `json:"data"`
+}
+
+type LocalMarketpriceData struct {
+	StartTimestamp int64   `json:"start_timestamp"`
+	EndTimestamp   int64   `json:"end_timestamp"`
+	Marketprice    float64 `json:"marketprice"`
+	Unit           string  `json:"unit"`
+	Localprice     float64 `json:"localprice"`
+	Localcell      string  `json:"localcell"`
+}
+
+type BestHourForEnergyConsumptionResponse struct {
+	bestHour bool
+}
