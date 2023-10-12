@@ -12,7 +12,7 @@ import (
 
 func TestGetGSIPrediction(t *testing.T) {
 	cfg := config.GetConfig()
-	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, logger.GetLogger())
+	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, logger.GetLogger(), nil)
 	resp, err := adapter.GetGSIPrediction(context.TODO(), "48155")
 	if err != nil {
 		t.Fatal(err)

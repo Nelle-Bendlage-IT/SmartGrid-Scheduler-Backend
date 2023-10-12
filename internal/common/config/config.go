@@ -9,6 +9,11 @@ type Config struct {
 	}
 	Port            int
 	CorrentlyAPIKey string `config:"CORRENTLY_API_KEY"`
+	DB              struct {
+		User string `config:"USER"`
+		Pass string `config:"PASS"`
+		URL  string `config:"URL"`
+	}
 }
 
 var appConfig Config

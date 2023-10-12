@@ -2,7 +2,6 @@ package adapters
 
 import (
 	"context"
-	"fmt"
 	"io"
 	"net/http"
 
@@ -29,8 +28,6 @@ func (a Adapter) GetGSIPrediction(ctx context.Context, zipcode string) (*GSIResp
 	if err != nil {
 		return nil, err
 	}
-
-	fmt.Println(gsiResponse)
 
 	return gsiResponse, nil
 }
