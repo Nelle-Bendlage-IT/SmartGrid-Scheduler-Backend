@@ -1,6 +1,8 @@
 package config
 
-import "github.com/JeremyLoy/config"
+import (
+	"github.com/JeremyLoy/config"
+)
 
 type Config struct {
 	Supabase struct {

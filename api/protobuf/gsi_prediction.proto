@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package gsi_predicition;
+
+option go_package = "github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/gsi_prediction";
+
+import "google/protobuf/timestamp.proto";
+
+service GSIPredictionService {
+    rpc GetGSIPrediction (GSIPrediction) returns (GetGSIPredictionResponse);
+}
+
+message GetGSIPredictionsRequest{
+    uint32 zipcode = 1;
+}
+
+message GetGSIPredictionResponse {
+    repeated GSIPrediction gsi_predictions = 1;
+}
+
+message GSIPrediction{
+    google.protobuf.Timestamp start_timestamp = 1;
+    uint32 zip_code = 2;
+    google.protobuf.Timestamp end_timestamp = 3;
+    uint32 wind = 4;
+    uint32 solar = 5;
+    float gsi = 6;
+    float co2_g_standard = 7;
+    float co2_g_oekostrom = 8;
+    float sci = 9;
+    float energyprice = 10;
+}
