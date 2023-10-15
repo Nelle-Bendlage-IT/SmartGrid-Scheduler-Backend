@@ -23,7 +23,7 @@ func TestGetGSIPrediction(t *testing.T) {
 
 func TestGetLocalPricePrediction(t *testing.T) {
 	cfg := config.GetConfig()
-	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, logger.GetLogger())
+	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, logger.GetLogger(), nil)
 	resp, err := adapter.GetLocalPricePrediction(context.TODO(), "48155")
 	if err != nil {
 		t.Fatal(err)
@@ -34,7 +34,7 @@ func TestGetLocalPricePrediction(t *testing.T) {
 
 func TestGetBestHourPrediction(t *testing.T) {
 	cfg := config.GetConfig()
-	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, logger.GetLogger())
+	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, logger.GetLogger(), nil)
 	resp, err := adapter.GetBestHourForEnergyConsumption(context.TODO(), "48155", "6")
 	if err != nil {
 		t.Fatal(err)
