@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package local_price_prediction;
+
+option go_package = "github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/local_price_prediction";
+
+import "google/protobuf/timestamp.proto";
+
+service LocalPricePredictionService {
+    rpc GetLocalPricePredictions (LocalPricePrediction) returns (LocalPricePredictionResponse);
+}
+
+message GetLocalPricePredictionsRequest{
+    uint32 zipcode = 1;
+}
+
+message LocalPricePredictionResponse {
+    repeated LocalPricePrediction local_price_predictions = 1;
+}
+
+message LocalPricePrediction{
+    google.protobuf.Timestamp start_timestamp = 1;
+    uint32 zip_code = 2;
+    google.protobuf.Timestamp end_timestamp = 3;
+    float market_price = 4;
+    float local_price = 5;
+}

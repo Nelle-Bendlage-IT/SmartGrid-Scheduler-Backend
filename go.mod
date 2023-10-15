@@ -8,6 +8,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.0.0
 	github.com/nedpals/supabase-go v0.3.0
 	github.com/stretchr/testify v1.8.4
+	github.com/surrealdb/surrealdb.go v0.2.1
 	go.uber.org/zap v1.18.1
 	google.golang.org/grpc v1.57.0
 	google.golang.org/protobuf v1.31.0
@@ -19,6 +20,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/go-querystring v1.1.0 // indirect
+	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/klauspost/cpuid/v2 v2.0.9 // indirect
 	github.com/nedpals/postgrest-go v0.1.3 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
