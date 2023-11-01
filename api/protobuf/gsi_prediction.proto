@@ -7,7 +7,7 @@ option go_package = "github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/in
 import "google/protobuf/timestamp.proto";
 
 service GSIPredictionService {
-    rpc GetGSIPrediction (GSIPrediction) returns (GetGSIPredictionResponse);
+    rpc GetGSIPrediction (GetGSIPredictionsRequest) returns (GetGSIPredictionResponse);
 }
 
 message GetGSIPredictionsRequest{
