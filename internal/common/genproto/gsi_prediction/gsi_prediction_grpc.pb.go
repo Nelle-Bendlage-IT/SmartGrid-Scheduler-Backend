@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.2.0
 // - protoc             v4.24.4
-// source: api/protobuf/gsi_prediction.proto
+// source: gsi_prediction.proto
 
 package gsi_prediction
 
@@ -18,89 +18,86 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// LocalPricePredictionServiceClient is the client API for LocalPricePredictionService service.
+// GSIPredictionServiceClient is the client API for GSIPredictionService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type LocalPricePredictionServiceClient interface {
-	GetGSIPrediction(ctx context.Context, in *GSIPrediction, opts ...grpc.CallOption) (*GetGSIPredictionResponse, error)
+type GSIPredictionServiceClient interface {
+	GetGSIPrediction(ctx context.Context, in *GetGSIPredictionsRequest, opts ...grpc.CallOption) (*GetGSIPredictionResponse, error)
 }
 
-type localPricePredictionServiceClient struct {
+type gSIPredictionServiceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewLocalPricePredictionServiceClient(cc grpc.ClientConnInterface) LocalPricePredictionServiceClient {
-	return &localPricePredictionServiceClient{cc}
+func NewGSIPredictionServiceClient(cc grpc.ClientConnInterface) GSIPredictionServiceClient {
+	return &gSIPredictionServiceClient{cc}
 }
 
-func (c *localPricePredictionServiceClient) GetGSIPrediction(ctx context.Context, in *GSIPrediction, opts ...grpc.CallOption) (*GetGSIPredictionResponse, error) {
+func (c *gSIPredictionServiceClient) GetGSIPrediction(ctx context.Context, in *GetGSIPredictionsRequest, opts ...grpc.CallOption) (*GetGSIPredictionResponse, error) {
 	out := new(GetGSIPredictionResponse)
-	err := c.cc.Invoke(ctx, "/gsi_predicition.LocalPricePredictionService/GetGSIPrediction", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/gsi_predicition.GSIPredictionService/GetGSIPrediction", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// LocalPricePredictionServiceServer is the server API for LocalPricePredictionService service.
-// All implementations must embed UnimplementedLocalPricePredictionServiceServer
+// GSIPredictionServiceServer is the server API for GSIPredictionService service.
+// All implementations should embed UnimplementedGSIPredictionServiceServer
 // for forward compatibility
-type LocalPricePredictionServiceServer interface {
-	GetGSIPrediction(context.Context, *GSIPrediction) (*GetGSIPredictionResponse, error)
-	mustEmbedUnimplementedLocalPricePredictionServiceServer()
+type GSIPredictionServiceServer interface {
+	GetGSIPrediction(context.Context, *GetGSIPredictionsRequest) (*GetGSIPredictionResponse, error)
 }
 
-// UnimplementedLocalPricePredictionServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedLocalPricePredictionServiceServer struct {
+// UnimplementedGSIPredictionServiceServer should be embedded to have forward compatible implementations.
+type UnimplementedGSIPredictionServiceServer struct {
 }
 
-func (UnimplementedLocalPricePredictionServiceServer) GetGSIPrediction(context.Context, *GSIPrediction) (*GetGSIPredictionResponse, error) {
+func (UnimplementedGSIPredictionServiceServer) GetGSIPrediction(context.Context, *GetGSIPredictionsRequest) (*GetGSIPredictionResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetGSIPrediction not implemented")
 }
-func (UnimplementedLocalPricePredictionServiceServer) mustEmbedUnimplementedLocalPricePredictionServiceServer() {
-}
 
-// UnsafeLocalPricePredictionServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to LocalPricePredictionServiceServer will
+// UnsafeGSIPredictionServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to GSIPredictionServiceServer will
 // result in compilation errors.
-type UnsafeLocalPricePredictionServiceServer interface {
-	mustEmbedUnimplementedLocalPricePredictionServiceServer()
+type UnsafeGSIPredictionServiceServer interface {
+	mustEmbedUnimplementedGSIPredictionServiceServer()
 }
 
-func RegisterLocalPricePredictionServiceServer(s grpc.ServiceRegistrar, srv LocalPricePredictionServiceServer) {
-	s.RegisterService(&LocalPricePredictionService_ServiceDesc, srv)
+func RegisterGSIPredictionServiceServer(s grpc.ServiceRegistrar, srv GSIPredictionServiceServer) {
+	s.RegisterService(&GSIPredictionService_ServiceDesc, srv)
 }
 
-func _LocalPricePredictionService_GetGSIPrediction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GSIPrediction)
+func _GSIPredictionService_GetGSIPrediction_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetGSIPredictionsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(LocalPricePredictionServiceServer).GetGSIPrediction(ctx, in)
+		return srv.(GSIPredictionServiceServer).GetGSIPrediction(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/gsi_predicition.LocalPricePredictionService/GetGSIPrediction",
+		FullMethod: "/gsi_predicition.GSIPredictionService/GetGSIPrediction",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(LocalPricePredictionServiceServer).GetGSIPrediction(ctx, req.(*GSIPrediction))
+		return srv.(GSIPredictionServiceServer).GetGSIPrediction(ctx, req.(*GetGSIPredictionsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// LocalPricePredictionService_ServiceDesc is the grpc.ServiceDesc for LocalPricePredictionService service.
+// GSIPredictionService_ServiceDesc is the grpc.ServiceDesc for GSIPredictionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var LocalPricePredictionService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "gsi_predicition.LocalPricePredictionService",
-	HandlerType: (*LocalPricePredictionServiceServer)(nil),
+var GSIPredictionService_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "gsi_predicition.GSIPredictionService",
+	HandlerType: (*GSIPredictionServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "GetGSIPrediction",
-			Handler:    _LocalPricePredictionService_GetGSIPrediction_Handler,
+			Handler:    _GSIPredictionService_GetGSIPrediction_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/protobuf/gsi_prediction.proto",
+	Metadata: "gsi_prediction.proto",
 }

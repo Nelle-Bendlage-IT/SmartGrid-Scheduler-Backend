@@ -38,7 +38,7 @@ func TestGetCurrentGSIPrediction(t *testing.T) {
 	cfg := config.GetConfig()
 	db := db.NewSurrealDBClient(cfg.DB.User, cfg.DB.Pass, cfg.DB.URL)
 	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, logger.GetLogger(), db)
-	result, err := adapter.GetCurrentGSIPrediction("12345")
+	result, err := adapter.ReadCurrentGSIPrediction("12345")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -69,7 +69,7 @@ func TestGetCurrentGSIPredictionQuery(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result, err := adapter.GetCurrentGSIPrediction("12366")
+	result, err := adapter.ReadCurrentGSIPrediction("12366")
 	if err != nil {
 		t.Fatal(err)
 	}

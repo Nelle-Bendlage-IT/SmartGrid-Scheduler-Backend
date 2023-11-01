@@ -4,15 +4,15 @@ import (
 	"encoding/json"
 	"fmt"
 	"strconv"
+	"time"
 
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/common"
 	pricePrediction "github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/genproto/gsi_prediction"
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 const gsiPredictionDBName = "gsipredictions"
 const gsiPredictionTableName = "data"
-const currentGsiPredicitionQuery = "SELECT * FROM type::table($table) WHERE zip_code = $zipcode AND start_timestamp < $timestamp"
+const currentGsiPredicitionQuery = "SELECT * FROM type::table($table) WHERE zip_code = $zipcode AND time::from::secs(start_timestamp.seconds) > time::now()"
 
 type dbGsiPredictionResponse = struct {
 	Result []*pricePrediction.GSIPrediction
@@ -35,13 +35,13 @@ func (a *Adapter) CreateGSIPrediction(prediction *pricePrediction.GSIPrediction)
 	return nil
 }
 
-func (a *Adapter) GetCurrentGSIPrediction(zipCode string) ([]*pricePrediction.GSIPrediction, error) {
+func (a *Adapter) ReadCurrentGSIPrediction(zipCode string) ([]*pricePrediction.GSIPrediction, error) {
 	_, err := a.db.Use(namespace, gsiPredictionDBName)
 	if err != nil {
 		a.logger.Error(err.Error())
 		return nil, common.DBSwitchNSDBError
 	}
-	currentTimestamp := timestamppb.Now()
+	currentTimestamp := time.Now()
 
 	// Define the query parameters as a map
 	// works only with zipcode as an int
@@ -62,7 +62,6 @@ func (a *Adapter) GetCurrentGSIPrediction(zipCode string) ([]*pricePrediction.GS
 	}
 
 	resultJSON, err := json.Marshal(result)
-	fmt.Println(string(resultJSON))
 	if err != nil {
 		a.logger.Error(err.Error())
 		return nil, err
