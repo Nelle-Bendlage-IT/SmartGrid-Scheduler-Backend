@@ -10,6 +10,7 @@ import (
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/app"
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/genproto/greet"
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/genproto/gsi_prediction"
+	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/genproto/local_price_prediction"
 )
 
 type GRPCService struct {
@@ -30,6 +31,15 @@ func (g GRPCService) GetGSIPrediction(ctx context.Context, req *gsi_prediction.G
 	zipCode := strconv.FormatUint(uint64(req.Zipcode), 10)
 
 	response, err := g.app.GetGSIPrediction.HandleGetGSIPredicition(zipCode)
+	if err != nil {
+		return nil, err
+	}
+	return response, nil
+}
+
+func (g GRPCService) GetLocalPricePredictions(ctx context.Context, req *local_price_prediction.GetLocalPricePredictionsRequest) (*local_price_prediction.LocalPricePredictionResponse, error) {
+	zipCode := strconv.FormatUint(uint64(req.Zipcode), 10)
+	response, err := g.app.GetLocalPricePredictions.HandleGetLocalPricePredicition(zipCode)
 	if err != nil {
 		return nil, err
 	}

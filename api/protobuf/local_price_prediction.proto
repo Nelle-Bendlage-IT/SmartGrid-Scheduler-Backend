@@ -7,7 +7,7 @@ option go_package = "github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/in
 import "google/protobuf/timestamp.proto";
 
 service LocalPricePredictionService {
-    rpc GetLocalPricePredictions (LocalPricePrediction) returns (LocalPricePredictionResponse);
+    rpc GetLocalPricePredictions (GetLocalPricePredictionsRequest) returns (LocalPricePredictionResponse);
 }
 
 message GetLocalPricePredictionsRequest{

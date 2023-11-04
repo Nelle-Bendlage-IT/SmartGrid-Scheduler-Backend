@@ -9,9 +9,11 @@ import (
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/app/handler"
 	greetService "github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/domain/greet"
 	gsiService "github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/domain/gsi_service"
+	localPriceService "github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/domain/local_price_prediction"
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/config"
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/genproto/greet"
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/genproto/gsi_prediction"
+	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/genproto/local_price_prediction"
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/internal/common/logger"
 	"github.com/Nelle-Bendlage-IT/SmartGrid-Scheduler-Backend/ports"
 	"github.com/grpc-ecosystem/go-grpc-middleware/v2/interceptors/logging"
@@ -40,8 +42,9 @@ func RunGRPCServer(supabaseClient *supa.Client, port string, zapLogger *zap.Logg
 	cfg := config.GetConfig()
 	adapter := adapters.NewAdapter(cfg.CorrentlyAPIKey, zapLogger, surrealDBInstance)
 	greetPort := ports.NewGRPCServer(app.Application{
-		Greet:            handler.NewGreetService(greetService.Service{}),
-		GetGSIPrediction: handler.NewGsiService(gsiService.NewService(adapter)),
+		Greet:                    handler.NewGreetService(greetService.Service{}),
+		GetGSIPrediction:         handler.NewGsiService(gsiService.NewService(adapter)),
+		GetLocalPricePredictions: handler.NewLocalPriceService(localPriceService.NewService(adapter)),
 	})
 
 	grpcServer := grpc.NewServer(grpc.ChainUnaryInterceptor(
@@ -51,6 +54,7 @@ func RunGRPCServer(supabaseClient *supa.Client, port string, zapLogger *zap.Logg
 	))
 	greet.RegisterGreetServiceServer(grpcServer, greetPort)
 	gsi_prediction.RegisterGSIPredictionServiceServer(grpcServer, greetPort)
+	local_price_prediction.RegisterLocalPricePredictionServiceServer(grpcServer, greetPort)
 
 	listen, err := net.Listen("tcp", ":"+port)
 	if err != nil {
